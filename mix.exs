@@ -51,7 +51,19 @@ defmodule Scholarr.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:mongodb_driver, "~> 1.0.0"}
+      {:mongodb_driver, "~> 1.0.0"},
+      # análise de código
+      {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
+      # Mock de dados
+      {:faker, "~> 0.17", only: [:dev, :test]},
+      # Biblioteca de data e tempo
+      {:timex, "~> 3.0"},
+      # Gerador UUID
+      {:nanoid, "~> 2.0.5"},
+      # análise de cobertura de testes
+      {:excoveralls, "~> 0.10", only: :dev},
+      # TDD
+      {:mix_test_watch, "~> 1.0", only: :dev}
     ]
   end
 

@@ -18,6 +18,8 @@ defmodule ScholarrWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    get "/test", TestController, :index
+    get "/test/:messenger", TestController, :show
   end
 
   # Other scopes may use custom stacks.
