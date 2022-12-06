@@ -17,7 +17,7 @@ defmodule ScholarrWeb.Router do
   scope "/", ScholarrWeb do
     pipe_through :browser
 
-    get "/", HomeController, :index
+    get "/", AppController, :index
     get "/test", TestController, :index
     get "/test/:messenger", TestController, :show
   end

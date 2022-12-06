@@ -1,4 +1,4 @@
-defmodule ScholarrWeb.HomeController do
+defmodule ScholarrWeb.NavbarController do
   use ScholarrWeb, :controller
 
   def index(conn, _params) do

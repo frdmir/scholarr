@@ -1,0 +1,49 @@
+defmodule Ecto.Nanoid do
+  @moduledoc """
+  Custom type that can auto-generate nanoids.
+  ## Usage
+  ```
+  defmodule Post do
+    use Ecto.Schema
+    alias Ecto.Nanoid
+    schema "posts" do
+      field(:number, Ecto.Nanoid, autogenerate: true)
+      field(:data, :string)
+    end
+  end
+  ```
+  In your migrations for the `posts` table,
+  ```
+  create table(:posts) do
+    add :number, :string
+    add :data, :string
+  end
+  ```
+  """
+
+  use Ecto.Type
+
+  def type, do: :string
+
+  def cast(value) when is_binary(value), do: {:ok, value}
+
+  def cast(_), do: :error
+
+  def load(value), do: {:ok, value}
+
+  def dump(value) when is_binary(value), do: {:ok, value}
+  def dump(_), do: :error
+
+  @doc """
+  Delegates generation of the field to `Nanoid.generate/0`.
+  To change the default nanoid size and alphabet, use `config.exs` as indicated
+  [here](https://hexdocs.pm/nanoid/readme.html#configuration).
+  """
+  # @spec autogenerate() :: String.t()
+  # def autogenerate, do: Integer.to_string(Enum.random([0, 1])) <> Nanoid.generate()
+
+  def gen(:string), do: Integer.to_string(Enum.random([0, 1])) <> Nanoid.generate()
+
+  def gen(:integer), do: Integer.to_string(Enum.random([0, 1])) <> Nanoid.generate(21, "0123456789")
+
+end
