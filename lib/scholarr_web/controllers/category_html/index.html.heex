@@ -1,0 +1,53 @@
+<section class="">
+  <div class="flex items-center w-full h-32">
+    <h2 class="text-2xl font-semibold text-green-600"><%= @category.title %></h2>
+  </div>
+
+  <%= if Enum.any?(@category.subcategory) do %>
+    <div :for={sub <- @category.subcategory} class="flex flex-col gap-4 mb-4">
+      <div class="flex items-center w-full h-14">
+        <.link href={"/course/#{@category.url}/#{sub.url}"}>
+          <span class="text-lg font-semibold text-gray-500 hover:text-gray-700">
+            <%= sub.title %>
+          </span>
+        </.link>
+      </div>
+      <div class="flex flex-row flex-wrap gap-4">
+        <div
+          :for={_ <- 1..6}
+          class="flex flex-col h-auto overflow-hidden transition-all duration-300 ease-in-out bg-white rounded-md shadow-lg w-60 max-h-72 hover:scale-105"
+        >
+          <div>
+            <img src="/images/capa.png" alt="" srcset="" />
+          </div>
+          <div class="flex flex-col justify-between p-4 gap-y-2">
+            <span class="text-xs font-semibold text-gray-500 uppercase">
+              adobe illustrator
+            </span>
+            <div class="h-12 overflow-hidden">
+              <p class="font-semibold text-ellipsis">
+                Lorem ipsum dolor sit amet consectetur adipisicing elitLibero atque consequatur quasi deserunt quod illo sed ipsam doloremque. Soluta pariatur quia, repellat iure in recusandae voluptas vel error assumenda nemo.
+              </p>
+            </div>
+            <div class="flex items-center justify-between w-full text-xs text-gray-500">
+              <span class="flex flex-row items-center">
+                <icon size="28" class="mr-2 text-red-500 mdi mdi-video"></icon>
+                <span>
+                  12/56
+                </span>
+              </span>
+              <span class="flex flex-row items-center">
+                <icon class="mr-2 text-red-500 mdi mdi-timer"></icon>
+                52 hours
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <div>
+      else
+    </div>
+  <% end %>
+</section>

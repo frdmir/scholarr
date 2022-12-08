@@ -1,12 +1,13 @@
 defmodule ScholarrWeb.Layouts do
-  alias Scholarr.Courses
   use ScholarrWeb, :html
   import ScholarrWeb.AppComponents
   alias Scholarr.Courses
+  alias Scholarr.Repo
 
   embed_templates "layouts/*"
 
-  def title() do
-    Courses.list_categories()
+  def categories() do
+    Courses.list_category()
+    |> Repo.preload(:subcategory)
   end
 end

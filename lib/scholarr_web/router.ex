@@ -18,8 +18,9 @@ defmodule ScholarrWeb.Router do
     pipe_through :browser
 
     get "/", AppController, :index
-    get "/test", TestController, :index
-    get "/test/:messenger", TestController, :show
+    get "/course", CourseController, :index
+    get "/course/:category", CategoryController, :index
+    get "/course/:category/:subcategory", SubcategoryController, :index
   end
 
   # Other scopes may use custom stacks.

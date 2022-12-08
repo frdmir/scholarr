@@ -44,44 +44,48 @@ defmodule ScholarrWeb.AppComponents do
   end
 
   attr :categories, :list
+  attr :conn, :list
 
   def sidebar(assigns) do
     ~H"""
-    <aside class="flex-shrink-0 bg-red-400 w-64">
-      <div class="flex items-center justify-between text-xl mb-8">
-        <span>
+    <aside class="flex-shrink-0 w-64 pl-8 bg-slate-100">
+      <div class="flex items-center justify-between mb-8 text-xl">
+        <span class="mdi mdi-arrow-right">
           Filter Course
-        </span>
-        <span
-          @click="store.hideComponent()"
-          class="flex items-center p-2 rounded-full cursor-pointer hover:bg-gray-100 active:bg-gray-300"
-        >
-          X
         </span>
       </div>
       <div>
         <span class="mb-4 text-xs text-gray-500">CATEGORY</span>
         <ul>
-          <li :for={category <- @categories}>
-            <div class="h-10 items-center flex flex-row justify-between hover:bg-gray-100 cursor-pointer">
-              <span class="font-semibold text-green-600">
-                <%= category.name %>
-              </span>
-              <span v-if="$route.params.category == cat.category" class="w-1 bg-green-600 h-full">
-              </span>
-            </div>
-            <ul v-if="cat.subCategories">
+          <li :for={category <- Enum.sort_by(@categories, & &1.title, :asc)}>
+            <.link
+              href={"/course/#{category.url}"}
+              class="leading-6 text-gray-700 hover:text-gray-700"
+            >
+              <div class="flex flex-row items-center justify-between h-10 cursor-pointer hover:text-green-600">
+                <span class={"#{if Phoenix.Controller.current_path(@conn) == "/course/#{category.url}", do: "text-green-600"} relative w-full"}>
+                  <%!-- <Heroicons.arrow_left solid class="inline w-3 h-3 stroke-current" /> --%>
+                  <%= category.title %>
+                  <span
+                    :if={Phoenix.Controller.current_path(@conn) == "/course/#{category.url}"}
+                    class="absolute top-0 right-0 w-1 h-full bg-green-600"
+                  >
+                  </span>
+                </span>
+              </div>
+            </.link>
+            <ul :if={category.subcategory}>
               <li
-                v-for="sub in cat.subCategories"
-                key="sub.id"
-                class="h-10 flex items-center group cursor-pointer text-gray-400"
-                @click="changeRoute(sub.to)"
+                :for={subcategory <- Enum.sort_by(category.subcategory, & &1.title, :asc)}
+                class="flex items-center h-10 text-gray-500 cursor-pointer group"
               >
                 <span class="bg-gray-300 w-0.5 h-full group-last:self-start group-last:h-1/2 "></span>
                 <span class="w-4 h-0.5 bg-gray-300 "></span>
-                <span class="ml-4 w-full h-full flex items-center hover:bg-gray-100">
-                  sub.name
-                </span>
+                <.link href={"/course/#{category.url}/#{subcategory.url}"}>
+                  <span class={"flex items-center w-full h-full ml-4 hover:text-gray-700 #{if Phoenix.Controller.current_path(@conn) == "/course/#{category.url}/#{subcategory.url}", do: "text-gray-700"}"}>
+                    <%= String.capitalize(subcategory.title) %>
+                  </span>
+                </.link>
               </li>
             </ul>
           </li>
@@ -89,90 +93,5 @@ defmodule ScholarrWeb.AppComponents do
       </div>
     </aside>
     """
-  end
-
-  def cat(assigns) do
-    [
-      %{
-        id: 1,
-        name: "Business",
-        category: "business",
-        to: "/courses/business"
-      },
-      %{
-        id: 2,
-        name: "Design & Illustration",
-        category: "design_&_illustration",
-        to: "/courses/design_&_illustration",
-        subCategories: [
-          %{
-            id: 2_1,
-            name: "Graphic Design",
-            category: "graphic_design",
-            to: "/courses/design_&_illustration/graphic_design"
-          },
-          %{
-            id: 2_2,
-            name: "Illustration",
-            category: "illustration",
-            to: "/courses/design_&_illustration/illustration"
-          },
-          %{
-            id: 2_3,
-            name: "Vector",
-            category: "vector",
-            to: "/courses/design_&_illustration/vector"
-          },
-          %{
-            id: 2_4,
-            name: "Digital Painting",
-            category: "digital_painting",
-            to: "/courses/design_&_illustration/digital_painting"
-          },
-          %{
-            id: 2_5,
-            name: "Photo Manipulation",
-            category: "photo_manipulation",
-            to: "/courses/design_&_illustration/photo_manipulation"
-          },
-          %{
-            id: 2_6,
-            name: "Print Design",
-            category: "print_design",
-            to: "/courses/design_&_illustration/print_design"
-          }
-        ]
-      },
-      %{
-        id: 3,
-        name: "Development",
-        category: "development",
-        to: "/courses/development"
-      },
-      %{
-        id: 4,
-        name: "Music & Audio",
-        category: "music_&_audio",
-        to: "/courses/music_&_audio"
-      },
-      %{
-        id: 5,
-        name: "UI/UX",
-        category: "ui_ux",
-        to: "/courses/ui_ux"
-      },
-      %{
-        id: 6,
-        name: "Photo & Video",
-        category: "photo_&_video",
-        to: "/courses/photo_&_video"
-      },
-      %{
-        id: 7,
-        name: "3D & Motion Graphic",
-        category: "3d_&_motion_graphic",
-        to: "/courses/3d_&_motion_graphic"
-      }
-    ]
   end
 end

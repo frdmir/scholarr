@@ -5,7 +5,6 @@ defmodule Scholarr.Courses do
 
   import Ecto.Query, warn: false
   alias Scholarr.Repo
-
   alias Scholarr.Courses.Category
 
   @doc """
@@ -13,11 +12,11 @@ defmodule Scholarr.Courses do
 
   ## Examples
 
-      iex> list_categories()
+      iex> list_category()
       [%Category{}, ...]
 
   """
-  def list_categories do
+  def list_category do
     Repo.all(Category)
   end
 
@@ -36,6 +35,8 @@ defmodule Scholarr.Courses do
 
   """
   def get_category!(id), do: Repo.get!(Category, id)
+
+  def get_category_url(url), do: Repo.get_by!(Category, %{url: url})
 
   @doc """
   Creates a Category.
@@ -132,6 +133,8 @@ defmodule Scholarr.Courses do
 
   """
   def get_subcategory!(id), do: Repo.get!(Subcategory, id)
+
+  def get_subcategory_url(url), do: Repo.get_by!(Subcategory, %{url: url})
 
   @doc """
   Creates a subcategory.

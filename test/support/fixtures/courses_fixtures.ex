@@ -27,7 +27,7 @@ defmodule Scholarr.CoursesFixtures do
       |> Enum.into(%{
         title: "some title"
       })
-      |> Scholarr.Courses.create_subcategories()
+      |> Scholarr.Courses.create_subcategory()
 
     subcategories
   end

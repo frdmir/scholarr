@@ -1,12 +1,7 @@
 <.navbar name="fred" />
-<div class="flex flex-row flex-1">
-  <ul>
-    <li :for={course <- title()}>
-      <%= course.title %>
-    </li>
-  </ul>
-  <%!-- <.sidebar /> --%>
-  <main class="flex-grow px-4 py-10 bg-blue-200 sm:px-6 lg:px-8">
+<div class="flex flex-row flex-1 overflow-hidden">
+  <.sidebar categories={categories()} conn={@conn} />
+  <main class="flex-grow px-4 py-10 overflow-y-scroll bg-slate-50 sm:px-6 lg:px-8">
     <div class="mx-auto">
       <.flash kind={:info} title="Success!" flash={@flash} />
       <.flash kind={:error} title="Error!" flash={@flash} />
@@ -21,8 +16,6 @@
       >
         Attempting to reconnect <Heroicons.arrow_path class="inline w-3 h-3 ml-1 animate-spin" />
       </.flash>
-      <.button type="button">aa</.button>
-      <.header>HEADER</.header>
       <%= @inner_content %>
     </div>
   </main>

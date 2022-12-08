@@ -1,20 +1,24 @@
 defmodule Scholarr.Courses.Subcategory do
-  alias Scholarr.Courses.Category
   use Scholarr.Schema
   import Ecto.Changeset
 
   @primary_key {:id, :string, autogenerate: {Ecto.Nanoid, :gen, [:string]}}
   schema "subcategory" do
     field :title, :string
-    belongs_to :category, Category
+    field :url, :string
+
+    belongs_to :category, Scholarr.Courses.Category
 
     timestamps()
   end
 
+  @required_values [:title, :url, :category_id]
+  @optional_values []
   @doc false
   def changeset(subcategory, attrs) do
     subcategory
-    |> cast(attrs, [:title, :category_id])
+    |> cast(attrs, @required_values, @optional_values)
     |> validate_required([:title, :category_id])
+    |> Scholarr.Courses.Category.trim()
   end
 end
