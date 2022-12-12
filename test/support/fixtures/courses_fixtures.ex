@@ -5,17 +5,17 @@ defmodule Scholarr.CoursesFixtures do
   """
 
   @doc """
-  Generate a course.
+  Generate a category.
   """
-  def course_fixture(attrs \\ %{}) do
-    {:ok, course} =
+  def category_fixture(attrs \\ %{}) do
+    {:ok, category} =
       attrs
       |> Enum.into(%{
-        title: "some title"
+        display_name: "some display_name"
       })
       |> Scholarr.Courses.create_category()
 
-    course
+    category
   end
 
   @doc """
@@ -25,10 +25,24 @@ defmodule Scholarr.CoursesFixtures do
     {:ok, subcategories} =
       attrs
       |> Enum.into(%{
-        title: "some title"
+        display_name: "some display_name"
       })
       |> Scholarr.Courses.create_subcategory()
 
     subcategories
+  end
+
+  @doc """
+  Generate a course.
+  """
+  def course_fixture(attrs \\ %{}) do
+    {:ok, course} =
+      attrs
+      |> Enum.into(%{
+        display_name: "some display_name"
+      })
+      |> Scholarr.Courses.create_course()
+
+    course
   end
 end

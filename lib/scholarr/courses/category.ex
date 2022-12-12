@@ -4,26 +4,26 @@ defmodule Scholarr.Courses.Category do
 
   @primary_key {:id, :string, autogenerate: {Ecto.Nanoid, :gen, [:string]}}
   schema "category" do
-    field :title, :string
+    field :display_name, :string
     field :url, :string
 
     has_many :subcategory, Scholarr.Courses.Subcategory
     timestamps()
   end
 
-  @required_fields [:title, :url]
+  @required_fields [:display_name, :url]
   @optional_fields []
   @doc false
   def changeset(category, attrs) do
     category
     |> cast(attrs, @required_fields, @optional_fields)
-    |> validate_required([:title])
+    |> validate_required([:display_name])
     |> trim()
   end
 
   def trim(changeset) do
     url =
-      remove_whitespace(get_change(changeset, :title))
+      remove_whitespace(get_change(changeset, :display_name))
       |> remove_slash()
       |> String.downcase()
 

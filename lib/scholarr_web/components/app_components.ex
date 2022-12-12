@@ -49,15 +49,11 @@ defmodule ScholarrWeb.AppComponents do
   def sidebar(assigns) do
     ~H"""
     <aside class="flex-shrink-0 w-64 pl-8 bg-slate-100">
-      <div class="flex items-center justify-between mb-8 text-xl">
-        <span class="mdi mdi-arrow-right">
-          Filter Course
-        </span>
-      </div>
+      <div class="flex items-center justify-between mb-8 text-xl"></div>
       <div>
         <span class="mb-4 text-xs text-gray-500">CATEGORY</span>
         <ul>
-          <li :for={category <- Enum.sort_by(@categories, & &1.title, :asc)}>
+          <li :for={category <- Enum.sort_by(@categories, & &1.display_name, :asc)}>
             <.link
               href={"/course/#{category.url}"}
               class="leading-6 text-gray-700 hover:text-gray-700"
@@ -65,7 +61,7 @@ defmodule ScholarrWeb.AppComponents do
               <div class="flex flex-row items-center justify-between h-10 cursor-pointer hover:text-green-600">
                 <span class={"#{if Phoenix.Controller.current_path(@conn) == "/course/#{category.url}", do: "text-green-600"} relative w-full"}>
                   <%!-- <Heroicons.arrow_left solid class="inline w-3 h-3 stroke-current" /> --%>
-                  <%= category.title %>
+                  <%= category.display_name %>
                   <span
                     :if={Phoenix.Controller.current_path(@conn) == "/course/#{category.url}"}
                     class="absolute top-0 right-0 w-1 h-full bg-green-600"
@@ -76,14 +72,14 @@ defmodule ScholarrWeb.AppComponents do
             </.link>
             <ul :if={category.subcategory}>
               <li
-                :for={subcategory <- Enum.sort_by(category.subcategory, & &1.title, :asc)}
+                :for={subcategory <- Enum.sort_by(category.subcategory, & &1.display_name, :asc)}
                 class="flex items-center h-10 text-gray-500 cursor-pointer group"
               >
                 <span class="bg-gray-300 w-0.5 h-full group-last:self-start group-last:h-1/2 "></span>
                 <span class="w-4 h-0.5 bg-gray-300 "></span>
                 <.link href={"/course/#{category.url}/#{subcategory.url}"}>
                   <span class={"flex items-center w-full h-full ml-4 hover:text-gray-700 #{if Phoenix.Controller.current_path(@conn) == "/course/#{category.url}/#{subcategory.url}", do: "text-gray-700"}"}>
-                    <%= String.capitalize(subcategory.title) %>
+                    <%= subcategory.display_name %>
                   </span>
                 </.link>
               </li>

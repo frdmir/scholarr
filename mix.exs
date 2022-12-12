@@ -19,7 +19,7 @@ defmodule Scholarr.MixProject do
   def application do
     [
       mod: {Scholarr.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :crypto]
     ]
   end
 
@@ -63,7 +63,9 @@ defmodule Scholarr.MixProject do
       # análise de cobertura de testes
       {:excoveralls, "~> 0.10", only: :dev},
       # TDD
-      {:mix_test_watch, "~> 1.0", only: :dev}
+      {:mix_test_watch, "~> 1.0", only: :dev},
+      # MIMETYPE
+      {:mime, "~> 2.0"}
     ]
   end
 
