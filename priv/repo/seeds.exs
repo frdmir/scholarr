@@ -10,8 +10,10 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 # alias Scholarr.Repo
+alias Scholarr.Repo
 alias Scholarr.Courses
 alias Scholarr.Sources
+alias Scholarr.Sources.Folder
 # alias Scholarr.Courses.{Category, Subcategory}
 
 cats = [
@@ -42,8 +44,9 @@ design =
 
 Enum.each(subs, &Courses.create_subcategory(Map.merge(&1, %{category_id: design.id})))
 
-# Sources.create_folder(%{
-#   "folder_name" => "root",
-#   "folder_path" => "/media/cursos",
-#   "parent_id" => "root"
-# })
+Sources.Folder.root_changeset(%Folder{}, %{
+  "folder_name" => "root",
+  "folder_path" => "/media/cursos",
+  "parent_id" => "root"
+})
+|> Repo.insert()

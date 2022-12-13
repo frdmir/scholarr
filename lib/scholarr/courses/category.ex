@@ -8,6 +8,7 @@ defmodule Scholarr.Courses.Category do
     field :url, :string
 
     has_many :subcategory, Scholarr.Courses.Subcategory
+    has_many :course, Scholarr.Courses.Course
     timestamps()
   end
 

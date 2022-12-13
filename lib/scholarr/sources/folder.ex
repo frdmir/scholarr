@@ -10,6 +10,7 @@ defmodule Scholarr.Sources.Folder do
     field :status, :boolean
 
     belongs_to :parent, Scholarr.Sources.Folder
+    belongs_to :course, Scholarr.Courses.Course
     has_many :files, Scholarr.Sources.File
     timestamps()
   end
@@ -17,6 +18,7 @@ defmodule Scholarr.Sources.Folder do
   @param_fields [:folder_name, :folder_path, :folder_path_hash, :status, :parent_id]
   @required_fields [:folder_name, :folder_path, :parent_id]
   @optional_fields []
+  @root_fields [:folder_name, :folder_path, :folder_path_hash, :status]
   @doc false
   def changeset(folder, attrs) do
     folder
@@ -25,4 +27,14 @@ defmodule Scholarr.Sources.Folder do
     |> Scholarr.Sources.File.path_hash(:folder_path, :folder_path_hash)
     |> Scholarr.Sources.File.file_status(:folder_path)
   end
+
+  def root_changeset(folder, attrs) do
+    folder
+    |> cast(attrs, @root_fields)
+    |> validate_required([:folder_name, :folder_path])
+    |> Scholarr.Sources.File.path_hash(:folder_path, :folder_path_hash)
+    |> Scholarr.Sources.File.file_status(:folder_path)
+  end
 end
+
+# %{"folder_name" => "root", "folder_path" => "/media/cursos", "parent_id" => "root"}

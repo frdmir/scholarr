@@ -1,4 +1,4 @@
-defmodule Scholarr.Repo.Migrations.CreateFolder do
+defmodule Scholarr.Repo.Migrations.CreateTableFolder do
   use Ecto.Migration
 
   def change do
@@ -9,7 +9,7 @@ defmodule Scholarr.Repo.Migrations.CreateFolder do
       add :folder_path_hash, :string
       add :status, :boolean
 
-      add :parent_id, references(:folder, type: :string)
+      add :parent_id, references(:folder, type: :string, on_delete: :delete_all)
       timestamps()
     end
 

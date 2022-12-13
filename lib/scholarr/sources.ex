@@ -37,6 +37,8 @@ defmodule Scholarr.Sources do
   """
   def get_file!(id), do: Repo.get!(File, id)
 
+  def get_file_hash(hash), do: Repo.get_by(File, file_path_hash: hash)
+
   @doc """
   Creates a file.
 
@@ -132,6 +134,8 @@ defmodule Scholarr.Sources do
 
   """
   def get_folder!(id), do: Repo.get!(Folder, id)
+
+  def get_folder_hash(hash), do: Repo.get_by(Folder, folder_path_hash: hash)
 
   @doc """
   Creates a folder.

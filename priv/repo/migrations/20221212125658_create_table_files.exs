@@ -1,4 +1,4 @@
-defmodule Scholarr.Repo.Migrations.CreateFile do
+defmodule Scholarr.Repo.Migrations.CreateTableFile do
   use Ecto.Migration
 
   def change do
@@ -13,7 +13,7 @@ defmodule Scholarr.Repo.Migrations.CreateFile do
       add :mime_type, :string
       add :status, :boolean
 
-      add :parent_id, references(:folder, type: :string)
+      add :parent_id, references(:folder, type: :string, on_delete: :delete_all)
       timestamps()
     end
 

@@ -9,6 +9,10 @@ defmodule Scholarr.Courses.Subcategory do
 
     belongs_to :category, Scholarr.Courses.Category
 
+    many_to_many :course, Scholarr.Courses.Course,
+      join_through: "course_subcategory",
+      on_replace: :delete
+
     timestamps()
   end
 

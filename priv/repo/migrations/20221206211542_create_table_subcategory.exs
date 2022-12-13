@@ -1,4 +1,4 @@
-defmodule Scholarr.Repo.Migrations.CreateSubcategory do
+defmodule Scholarr.Repo.Migrations.CreateTableSubcategory do
   use Ecto.Migration
 
   def change do
