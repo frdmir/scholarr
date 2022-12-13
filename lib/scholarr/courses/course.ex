@@ -15,7 +15,7 @@ defmodule Scholarr.Courses.Course do
       join_through: "course_subcategory",
       on_replace: :delete
 
-    has_one :folder, Scholarr.Sources.Folder
+    has_one :folder, Scholarr.Filesystem.Folder
 
     timestamps()
   end

@@ -1,7 +1,7 @@
 defmodule Scholarr.SourcesFixtures do
   @moduledoc """
   This module defines test helpers for creating
-  entities via the `Scholarr.Sources` context.
+  entities via the `Scholarr.Filesystem` context.
   """
 
   @doc """
@@ -13,7 +13,7 @@ defmodule Scholarr.SourcesFixtures do
       |> Enum.into(%{
         file_name: "some file_name"
       })
-      |> Scholarr.Sources.create_file()
+      |> Scholarr.Filesystem.create_file()
 
     file
   end
@@ -27,7 +27,7 @@ defmodule Scholarr.SourcesFixtures do
       |> Enum.into(%{
         folder_name: "some folder_name"
       })
-      |> Scholarr.Sources.create_folder()
+      |> Scholarr.Filesystem.create_folder()
 
     folder
   end

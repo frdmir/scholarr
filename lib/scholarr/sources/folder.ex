@@ -1,4 +1,4 @@
-defmodule Scholarr.Sources.Folder do
+defmodule Scholarr.Filesystem.Folder do
   use Scholarr.Schema
   import Ecto.Changeset
 
@@ -9,9 +9,9 @@ defmodule Scholarr.Sources.Folder do
     field :folder_path_hash, :string
     field :status, :boolean
 
-    belongs_to :parent, Scholarr.Sources.Folder
+    belongs_to :parent, Scholarr.Filesystem.Folder
     belongs_to :course, Scholarr.Courses.Course
-    has_many :files, Scholarr.Sources.File
+    has_many :files, Scholarr.Filesystem.File
     timestamps()
   end
 
@@ -24,16 +24,16 @@ defmodule Scholarr.Sources.Folder do
     folder
     |> cast(attrs, @param_fields, @optional_fields)
     |> validate_required(@required_fields)
-    |> Scholarr.Sources.File.path_hash(:folder_path, :folder_path_hash)
-    |> Scholarr.Sources.File.file_status(:folder_path)
+    |> Scholarr.Filesystem.File.path_hash(:folder_path, :folder_path_hash)
+    |> Scholarr.Filesystem.File.file_status(:folder_path)
   end
 
   def root_changeset(folder, attrs) do
     folder
     |> cast(attrs, @root_fields)
     |> validate_required([:folder_name, :folder_path])
-    |> Scholarr.Sources.File.path_hash(:folder_path, :folder_path_hash)
-    |> Scholarr.Sources.File.file_status(:folder_path)
+    |> Scholarr.Filesystem.File.path_hash(:folder_path, :folder_path_hash)
+    |> Scholarr.Filesystem.File.file_status(:folder_path)
   end
 end
 

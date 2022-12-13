@@ -1,12 +1,12 @@
-defmodule Scholarr.Sources do
+defmodule Scholarr.Filesystem do
   @moduledoc """
-  The Sources context.
+  The Filesystem context.
   """
 
   import Ecto.Query, warn: false
   alias Scholarr.Repo
 
-  alias Scholarr.Sources.File
+  alias Scholarr.Filesystem.File
 
   @doc """
   Returns the list of file.
@@ -104,7 +104,7 @@ defmodule Scholarr.Sources do
     File.changeset(file, attrs)
   end
 
-  alias Scholarr.Sources.Folder
+  alias Scholarr.Filesystem.Folder
 
   @doc """
   Returns the list of folder.

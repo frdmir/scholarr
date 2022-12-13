@@ -1,4 +1,4 @@
-defmodule Scholarr.Sources.File do
+defmodule Scholarr.Filesystem.File do
   use Scholarr.Schema
   import Ecto.Changeset
 
@@ -13,7 +13,7 @@ defmodule Scholarr.Sources.File do
     field :mime_type, :string
     field :status, :boolean
 
-    belongs_to :parent, Scholarr.Sources.Folder
+    belongs_to :parent, Scholarr.Filesystem.Folder
     timestamps()
   end
 
