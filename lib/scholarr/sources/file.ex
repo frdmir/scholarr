@@ -13,7 +13,7 @@ defmodule Scholarr.Filesystem.File do
     field :mime_type, :string
     field :status, :boolean
 
-    belongs_to :parent, Scholarr.Filesystem.Folder
+    belongs_to :folder, Scholarr.Filesystem.Folder
     timestamps()
   end
 
@@ -26,9 +26,9 @@ defmodule Scholarr.Filesystem.File do
     :status,
     :content_hash,
     :file_extension,
-    :parent_id
+    :folder_id
   ]
-  @required_fields [:file_name, :file_path, :file_size, :parent_id]
+  @required_fields [:file_name, :file_path, :file_size, :folder_id]
   @optional_fields []
   @doc false
   def changeset(file, attrs \\ %{}) do
@@ -37,6 +37,7 @@ defmodule Scholarr.Filesystem.File do
     |> validate_required(@required_fields)
     |> content_hash()
     |> path_hash(:file_path, :file_path_hash)
+    |> unique_constraint(:content_hash)
     |> set_mimetype()
     |> file_status(:file_path)
   end

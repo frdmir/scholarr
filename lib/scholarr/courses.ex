@@ -296,4 +296,28 @@ defmodule Scholarr.Courses do
   def change_course(%Course{} = course, attrs \\ %{}) do
     Course.changeset(course, attrs)
   end
+
+  alias Scholarr.Courses.CourseCategory
+
+  def create_course_in_category(course, category) do
+    category =
+      get_category!(category)
+      |> Repo.preload(:course)
+
+    CourseCategory.create_course_in_category(course, category)
+    |> Repo.insert!()
+  end
+
+  def update_course_category(course, category) do
+    course =
+      get_course!(course)
+      |> Repo.preload(:category)
+
+    category =
+      get_category!(category)
+      |> Repo.preload(:course)
+
+    CourseCategory.update_course_in_category(course, category)
+    |> Repo.update!()
+  end
 end

@@ -5,11 +5,13 @@ defmodule Scholarr.Courses.Course do
   @primary_key {:id, :string, autogenerate: {Ecto.Nanoid, :gen, [:string]}}
   schema "course" do
     field :display_name, :string
-    field :videos, :string
-    field :thumbnail_link, :string
-    field :thumbnail_version, :string
+    field :videos, :string, default: "0"
+    field :thumbnail_link, :string, default: "#"
+    field :thumbnail_version, :string, default: "0"
 
-    has_one :category, Scholarr.Courses.Category
+    many_to_many :category, Scholarr.Courses.Category,
+      join_through: "course_category",
+      on_replace: :delete
 
     many_to_many :subcategory, Scholarr.Courses.Subcategory,
       join_through: "course_subcategory",
@@ -24,19 +26,13 @@ defmodule Scholarr.Courses.Course do
     :display_name,
     :videos,
     :thumbnail_link,
-    :thumbnail_version,
-    :category_id,
-    :subcategory_id,
-    :folder_id
+    :thumbnail_version
   ]
   @required_fields [
     :display_name,
     :videos,
     :thumbnail_link,
-    :thumbnail_version,
-    :category_id,
-    :subcategory_id,
-    :folder_id
+    :thumbnail_version
   ]
   @optional_fields []
   @doc false

@@ -9,7 +9,8 @@ defmodule Scholarr.Repo.Migrations.CreateTableFolder do
       add :folder_path_hash, :string
       add :status, :boolean
 
-      add :parent_id, references(:folder, type: :string, on_delete: :delete_all)
+      add :folder_id, references(:folder, type: :string, on_delete: :delete_all)
+
       timestamps()
     end
 

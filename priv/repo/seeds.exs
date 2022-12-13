@@ -12,8 +12,8 @@
 # alias Scholarr.Repo
 alias Scholarr.Repo
 alias Scholarr.Courses
-alias Scholarr.Sources
-alias Scholarr.Sources.Folder
+alias Scholarr.Filesystem
+alias Scholarr.Filesystem.Folder
 # alias Scholarr.Courses.{Category, Subcategory}
 
 cats = [
@@ -23,7 +23,8 @@ cats = [
   %{display_name: "Music & Audio"},
   %{display_name: "UI/UX"},
   %{display_name: "Photo & Video"},
-  %{display_name: "3D & Motion Graphic"}
+  %{display_name: "3D & Motion Graphic"},
+  %{display_name: "Uncategorized"}
 ]
 
 subs = [
@@ -44,9 +45,11 @@ design =
 
 Enum.each(subs, &Courses.create_subcategory(Map.merge(&1, %{category_id: design.id})))
 
-Sources.Folder.root_changeset(%Folder{}, %{
+Filesystem.Folder.root_changeset(%Folder{}, %{
   "folder_name" => "root",
   "folder_path" => "/media/cursos",
-  "parent_id" => "root"
+  "folder_id" => "root"
 })
 |> Repo.insert()
+
+Scholarr.Helpers.file_scanner()

@@ -8,7 +8,11 @@ defmodule Scholarr.Courses.Category do
     field :url, :string
 
     has_many :subcategory, Scholarr.Courses.Subcategory
-    has_many :course, Scholarr.Courses.Course
+
+    many_to_many :course, Scholarr.Courses.Course,
+      join_through: "course_category",
+      on_replace: :delete
+
     timestamps()
   end
 

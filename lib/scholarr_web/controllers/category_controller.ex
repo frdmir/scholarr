@@ -13,6 +13,7 @@ defmodule ScholarrWeb.CategoryController do
   end
 
   def show(conn, %{"category" => category}) do
-    render(conn, :show, category: Courses.get_category_url(category))
+    category = Courses.get_category_url(category)
+    render(conn, :show, category: category)
   end
 end

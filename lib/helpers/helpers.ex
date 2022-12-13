@@ -3,45 +3,68 @@ defmodule Scholarr.Helpers do
   Documentation for `Helpers`.
   """
   alias Scholarr.Filesystem
-  @parent_path "/media/cursos"
-  def file_scanner(path \\ @parent_path, parent \\ %{id: "root"}) do
+  alias Scholarr.Courses
+  @folder_path "/media/cursos"
+  def file_scanner(path \\ @folder_path, folder \\ %{}) do
     cond do
       File.regular?(path) ->
-        check_file(path, parent)
+        check_file(path, folder)
 
       File.dir?(path) ->
         File.ls!(path)
         |> Enum.sort()
         |> Enum.map(&Path.join(path, &1))
-        |> Enum.map(&file_scanner(&1, check_folder(path, parent)))
+        |> Enum.map(&file_scanner(&1, check_folder(path, folder)))
 
       true ->
         nil
     end
   end
 
-  defp check_folder(path, parent) do
+  defp check_folder(path, folder) do
     hash = :crypto.hash(:sha256, path) |> Base.encode64()
+    IO.inspect(folder, label: "CHECK FOLDER")
 
     case Filesystem.get_folder_hash(hash) do
       nil ->
-        folder_name = Path.basename(path)
+        folder_is_root?(folder, path)
+
+      folder ->
+        folder
+    end
+  end
+
+  defp folder_is_root?(folder, path) do
+    folder_name = Path.basename(path)
+
+    case folder.folder_name do
+      "root" ->
+        uncategorized = Courses.get_category_url("uncategorized")
+        result = Courses.create_course_in_category(%{display_name: folder_name}, uncategorized.id)
 
         {:ok, folder} =
           Filesystem.create_folder(%{
             "folder_name" => folder_name,
             "folder_path" => path,
-            "parent_id" => parent.id
+            "folder_id" => folder.id,
+            "course_id" => result.id
           })
 
         folder
 
-      parent ->
-        parent
+      _ ->
+        {:ok, folder} =
+          Filesystem.create_folder(%{
+            "folder_name" => folder_name,
+            "folder_path" => path,
+            "folder_id" => folder.id
+          })
+
+        folder
     end
   end
 
-  defp check_file(path, parent) do
+  defp check_file(path, folder) do
     hash = :crypto.hash(:sha256, path) |> Base.encode64()
 
     case Filesystem.get_file_hash(hash) do
@@ -54,17 +77,17 @@ defmodule Scholarr.Helpers do
             "file_name" => filename,
             "file_path" => path,
             "file_size" => to_string(stat.size),
-            "parent_id" => parent.id
+            "folder_id" => folder.id
           })
 
         file
 
-      parent ->
-        parent
+      folder ->
+        folder
     end
   end
 
-  defp check_course() do
+  defp check_course(path) do
     hash = :crypto.hash(:sha256, path) |> Base.encode64()
 
     case Filesystem.get_file_hash(hash) do
@@ -76,14 +99,14 @@ defmodule Scholarr.Helpers do
           Filesystem.create_file(%{
             "file_name" => filename,
             "file_path" => path,
-            "file_size" => to_string(stat.size),
-            "parent_id" => parent.id
+            "file_size" => to_string(stat.size)
+            # "folder_id" => folder.id
           })
 
         file
 
-      parent ->
-        parent
+      folder ->
+        folder
     end
   end
 end

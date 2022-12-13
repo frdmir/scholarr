@@ -8,10 +8,13 @@ defmodule Scholarr.Repo.Migrations.CreateTableCourse do
       add :videos, :string
       add :thumbnail_link, :string
       add :thumbnail_version, :string
+      add :total_folders, :integer, default: 0
+      add :total_files, :integer, default: 0
+      add :total_bytes, :integer, default: 0
 
-      add :category_id, references(:category, type: :string, on_delete: :delete_all)
-      add :subcategory_id, references(:subcategory, type: :string, on_delete: :delete_all)
-      add :folder_id, references(:folder, type: :string, on_delete: :delete_all)
+      # add :category_id, references(:category, type: :string, on_delete: :delete_all)
+      # add :subcategory_id, references(:subcategory, type: :string, on_delete: :delete_all)
+      # add :folder_id, references(:folder, type: :string, on_delete: :delete_all)
       timestamps()
     end
   end
