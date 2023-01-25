@@ -1,0 +1,10 @@
+<div class="flex flex-row justify-between w-full">
+  <.course_content
+    module={@modules}
+    lesson={@lesson}
+    changeset={@changeset}
+    edit={@edit}
+    conn={@socket}
+  />
+  <.course_sidebar course={@course} modules={@modules} />
+</div>

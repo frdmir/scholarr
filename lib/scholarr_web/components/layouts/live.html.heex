@@ -1,6 +1,5 @@
 <.navbar name="fred" />
 <div class="flex flex-row flex-1 overflow-y-auto">
-  <.sidebar categories={categories()} conn={@conn} />
   <main class="flex-grow mb-4 overflow-y-auto">
     <.flash kind={:info} title="Success!" flash={@flash} />
     <.flash kind={:error} title="Error!" flash={@flash} />

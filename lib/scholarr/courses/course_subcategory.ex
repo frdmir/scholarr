@@ -1,6 +1,7 @@
 defmodule Scholarr.Courses.CourseSubcategory do
   use Scholarr.Schema
   import Ecto.Changeset
+  alias Scholarr.Courses
 
   @primary_key false
   schema "course_subcategory" do
@@ -10,19 +11,15 @@ defmodule Scholarr.Courses.CourseSubcategory do
     timestamps()
   end
 
-  @param_fields [
-    :course_id,
-    :subcategory_id
-  ]
-  @required_fields [
-    :course_id,
-    :subcategory_id
-  ]
-  @optional_fields []
-  @doc false
-  def changeset(course_subcategory, attrs) do
-    course_subcategory
-    |> cast(attrs, @param_fields, @optional_fields)
-    |> validate_required(@required_fields)
+  def create_course_in_subcategory(course, subcategory) do
+    %Courses.Course{}
+    |> Courses.Course.changeset(course)
+    |> put_assoc(:subcategory, [subcategory])
+  end
+
+  def update_course_in_subcategory(course, subcategory) do
+    subcategory
+    |> change()
+    |> put_assoc(:course, [course])
   end
 end

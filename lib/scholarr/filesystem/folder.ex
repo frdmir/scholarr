@@ -9,14 +9,14 @@ defmodule Scholarr.Filesystem.Folder do
     field :folder_path_hash, :string
     field :status, :boolean
 
-    belongs_to :folder, Scholarr.Filesystem.Folder
+    belongs_to :parent, Scholarr.Filesystem.Folder, foreign_key: :parent_id
     belongs_to :course, Scholarr.Courses.Course
-    has_many :file, Scholarr.Filesystem.File
+    has_many :file, Scholarr.Filesystem.File, foreign_key: :parent_id
     timestamps()
   end
 
-  @param_fields [:folder_name, :folder_path, :folder_path_hash, :status, :folder_id, :course_id]
-  @required_fields [:folder_name, :folder_path, :folder_id]
+  @param_fields [:folder_name, :folder_path, :folder_path_hash, :status, :parent_id, :course_id]
+  @required_fields [:folder_name, :folder_path, :parent_id]
   @optional_fields []
   @root_fields [:folder_name, :folder_path, :folder_path_hash, :status]
   @doc false
@@ -29,13 +29,12 @@ defmodule Scholarr.Filesystem.Folder do
     |> Scholarr.Filesystem.File.file_status(:folder_path)
   end
 
-  def root_changeset(folder, attrs) do
+  def changeset(folder, attrs, is_root?) when is_root? == true do
     folder
     |> cast(attrs, @root_fields)
     |> validate_required([:folder_name, :folder_path])
     |> Scholarr.Filesystem.File.path_hash(:folder_path, :folder_path_hash)
+    |> unique_constraint(:folder_path_hash)
     |> Scholarr.Filesystem.File.file_status(:folder_path)
   end
 end
-
-# %{"folder_name" => "root", "folder_path" => "/media/cursos", "folder_id" => "root"}

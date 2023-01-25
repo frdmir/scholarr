@@ -27,15 +27,22 @@ defmodule Scholarr.Courses.Category do
   end
 
   def trim(changeset) do
-    url =
-      remove_whitespace(get_change(changeset, :display_name))
-      |> remove_slash()
-      |> String.downcase()
+    case get_change(changeset, :display_name) do
+      nil ->
+        changeset
 
-    put_change(changeset, :url, url)
+      display_name ->
+        url =
+          remove_whitespace(display_name)
+          |> remove_slash()
+          |> String.downcase()
+
+        put_change(changeset, :url, url)
+    end
   end
 
-  defp remove_whitespace(string), do: Regex.replace(~r/\s+/, string, "_")
+  defp remove_whitespace(string),
+    do: Regex.replace(~r/\s+/, string, "_")
 
   defp remove_slash(string), do: Regex.replace(~r/\/+/, string, "_")
 end

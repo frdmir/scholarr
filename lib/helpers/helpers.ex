@@ -2,10 +2,12 @@ defmodule Scholarr.Helpers do
   @moduledoc """
   Documentation for `Helpers`.
   """
+
   alias Scholarr.Filesystem
   alias Scholarr.Courses
-  @folder_path "/media/cursos"
-  def file_scanner(path \\ @folder_path, folder \\ %{}) do
+  # @folder_path "/media/cursos"
+
+  def file_scanner(path \\ Elixir.Application.get_env(:video_stream, :folder), folder \\ %{}) do
     cond do
       File.regular?(path) ->
         check_file(path, folder)
@@ -46,7 +48,7 @@ defmodule Scholarr.Helpers do
           Filesystem.create_folder(%{
             "folder_name" => folder_name,
             "folder_path" => path,
-            "folder_id" => folder.id,
+            "parent_id" => folder.id,
             "course_id" => result.id
           })
 
@@ -57,7 +59,7 @@ defmodule Scholarr.Helpers do
           Filesystem.create_folder(%{
             "folder_name" => folder_name,
             "folder_path" => path,
-            "folder_id" => folder.id
+            "parent_id" => folder.id
           })
 
         folder
@@ -69,16 +71,18 @@ defmodule Scholarr.Helpers do
 
     case Filesystem.get_file_hash(hash) do
       nil ->
-        filename = Path.basename(path)
         {:ok, stat} = File.stat(path)
 
         {:ok, file} =
           Filesystem.create_file(%{
-            "file_name" => filename,
-            "file_path" => path,
+            "file_name" => Path.rootname(Path.basename(path)),
+            "file_path" => Path.dirname(path),
+            "file_extension" => Path.extname(path),
             "file_size" => to_string(stat.size),
-            "folder_id" => folder.id
+            "parent_id" => folder.id
           })
+
+        IO.inspect(file, label: "CHECK FILE")
 
         file
 
@@ -100,7 +104,7 @@ defmodule Scholarr.Helpers do
             "file_name" => filename,
             "file_path" => path,
             "file_size" => to_string(stat.size)
-            # "folder_id" => folder.id
+            # "parent_id" => folder.id
           })
 
         file

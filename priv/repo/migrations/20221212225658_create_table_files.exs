@@ -5,7 +5,7 @@ defmodule Scholarr.Repo.Migrations.CreateTableFile do
     create table(:file, primary_key: false) do
       add :id, :string, primary_key: true
       add :content_hash, :string
-      add :file_extension, {:array, :string}
+      add :file_extension, :string
       add :file_name, :string
       add :file_path, :string
       add :file_path_hash, :string
@@ -13,7 +13,7 @@ defmodule Scholarr.Repo.Migrations.CreateTableFile do
       add :mime_type, :string
       add :status, :boolean
 
-      add :folder_id, references(:folder, type: :string, on_delete: :delete_all)
+      add :parent_id, references(:folder, type: :string, on_delete: :delete_all), null: false
       timestamps()
     end
 

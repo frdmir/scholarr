@@ -4,7 +4,7 @@ defmodule Scholarr.Repo.Migrations.CreateTableCategory do
   def change do
     create table(:category, primary_key: false) do
       add :id, :string, primary_key: true
-      add :display_name, :string
+      add :display_name, :string, null: false
       add :url, :string
       timestamps()
     end

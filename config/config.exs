@@ -13,6 +13,7 @@ config :scholarr,
 # Configures the endpoint
 config :scholarr, ScholarrWeb.Endpoint,
   url: [host: "localhost"],
+  # http: [port: 4000, ip: {0, 0, 0, 0}],
   render_errors: [
     formats: [html: ScholarrWeb.ErrorHTML, json: ScholarrWeb.ErrorJSON],
     layout: false
@@ -63,5 +64,4 @@ config :phoenix, :json_library, Jason
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"
 
-config :nanoid,
-  size: 21
+config :nanoid, size: 21

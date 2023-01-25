@@ -17,7 +17,7 @@ defmodule ScholarrWeb do
   those modules here.
   """
 
-  def static_paths, do: ~w(assets fonts images favicon.ico robots.txt)
+  def static_paths, do: ~w(media assets fonts images favicon.ico robots.txt)
 
   def router do
     quote do
@@ -53,7 +53,8 @@ defmodule ScholarrWeb do
   def live_view do
     quote do
       use Phoenix.LiveView,
-        layout: {ScholarrWeb.Layouts, :app}
+        layout: {ScholarrWeb.Layouts, :live},
+        container: {:div, class: "flex flex-1 flex-col h-full"}
 
       unquote(html_helpers())
     end

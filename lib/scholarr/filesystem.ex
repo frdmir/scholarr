@@ -5,8 +5,20 @@ defmodule Scholarr.Filesystem do
 
   import Ecto.Query, warn: false
   alias Scholarr.Repo
-
   alias Scholarr.Filesystem.File
+  alias Scholarr.Filesystem.Folder
+
+  def get_childrens!(id) do
+    struct = Folder
+
+    query =
+      from(f in struct,
+        where: f.parent_id == ^id,
+        preload: [:file]
+      )
+
+    Repo.all(query)
+  end
 
   @doc """
   Returns the list of file.
@@ -53,7 +65,7 @@ defmodule Scholarr.Filesystem do
   """
   def create_file(attrs \\ %{}) do
     %File{}
-    |> File.changeset(attrs)
+    |> File.create_file(attrs)
     |> Repo.insert()
   end
 
@@ -73,6 +85,12 @@ defmodule Scholarr.Filesystem do
     file
     |> File.changeset(attrs)
     |> Repo.update()
+  end
+
+  def rename_file(%File{} = file, new_name) do
+    old_name = Path.join(file.file_path, [file.file_name, file.file_extension])
+    new_name = Path.join(file.file_path, [new_name, file.file_extension])
+    Elixir.File.rename(old_name, new_name)
   end
 
   @doc """
@@ -103,8 +121,6 @@ defmodule Scholarr.Filesystem do
   def change_file(%File{} = file, attrs \\ %{}) do
     File.changeset(file, attrs)
   end
-
-  alias Scholarr.Filesystem.Folder
 
   @doc """
   Returns the list of folder.

@@ -1,3 +1,84 @@
-<h1>
-  Course <%= @category %>
-</h1>
+<div class="flex flex-row justify-between w-full h-full">
+  <div class="flex flex-col flex-1 p-8">
+    <div>breadcumbs / courses / category / subcategory / course</div>
+    <video id="my-video" controls="true" crossorigin="anonymous" class="rounded-lg drop-shadow-lg">
+      <source src="https://jplayer.org/video/webm/Big_Buck_Bunny_Trailer.webm" type="video/webm" />
+      <source src="https://jplayer.org/video/m4v/Big_Buck_Bunny_Trailer.m4v" type="video/mp4" />
+      <p>
+        Your browser doesn't support HTML video. Here is a
+        <a href="rabbit320.mp4">link to the video</a>
+        instead.
+      </p>
+    </video>
+    <div class="flex flex-row justify-end py-4 border-b">
+      <div class="flex flex-row gap-4">
+        <span class="flex items-center justify-center w-8 h-8 text-red-500 rounded-full shadow-lg mdi mdi-heart">
+        </span>
+        <span class="flex items-center justify-center w-8 h-8 text-gray-500 rounded-full shadow-lg mdi mdi-pin">
+        </span>
+        <span class="flex items-center justify-center w-8 h-8 text-gray-500 rounded-full shadow-lg mdi mdi-dots-vertical">
+        </span>
+      </div>
+    </div>
+    <%!-- <%= live_render(@conn, ScholarrWeb.Course.CourseLive) %> --%>
+  </div>
+  <div class="flex flex-col w-1/3 h-full p-8 border-l border-opacity-50">
+    <div class="flex flex-col gap-6 mb-6 ">
+      <div>
+        <button class="px-6 py-1 text-sm font-bold text-blue-600 uppercase transition-colors duration-150 ease-in-out rounded-md ring-2 ring-blue-600 hover:bg-blue-600 hover:text-white active:bg-blue-800">
+          Back
+        </button>
+      </div>
+
+      <span class="text-lg font-bold">
+        <%= @course.display_name %>
+      </span>
+    </div>
+    <div class="flex flex-col gap-4">
+      <%= for _ <- 1..5 do %>
+        <div class="flex flex-col gap-6 p-6 font-bold border rounded-md bg-gray-50">
+          <div class="flex flex-row justify-between">
+            <span>Preparation</span>
+            <span>15:00</span>
+          </div>
+          <div class="flex flex-row items-center justify-between text-sm text-gray-400">
+            <div class="flex flex-row items-center gap-2">
+              <div class="flex items-center justify-center w-8 h-8 bg-green-500 rounded-full">
+                <span class="text-lg text-white mdi mdi-check"></span>
+              </div>
+              <span>Choosing right tools</span>
+            </div>
+            <span>02:30</span>
+          </div>
+          <div class="flex flex-row items-center justify-between text-sm text-gray-400">
+            <div class="flex flex-row items-center gap-2">
+              <div class="flex items-center justify-center w-8 h-8 bg-green-500 rounded-full">
+                <span class="text-lg text-white mdi mdi-check"></span>
+              </div>
+              <span>Browsing for resources</span>
+            </div>
+            <span>03:15</span>
+          </div>
+          <div class="flex flex-row items-center justify-between text-sm text-blue-600">
+            <div class="flex flex-row items-center gap-2">
+              <div class="flex items-center justify-center w-8 h-8 bg-blue-100 rounded-full">
+                <span class="text-lg mdi mdi-pause"></span>
+              </div>
+              <span>Choosing right tools</span>
+            </div>
+            <span>02:30</span>
+          </div>
+          <div class="flex flex-row items-center justify-between text-sm text-gray-700">
+            <div class="flex flex-row items-center gap-2">
+              <div class="flex items-center justify-center w-8 h-8 bg-blue-100 rounded-full">
+                <span class="text-lg text-blue-600 mdi mdi-play"></span>
+              </div>
+              <span>Defining color scheme</span>
+            </div>
+            <span>02:30</span>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

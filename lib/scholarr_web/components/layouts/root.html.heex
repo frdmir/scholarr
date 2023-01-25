@@ -10,8 +10,12 @@
     <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
     </script>
+    <script src="https://vjs.zencdn.net/7.20.3/video.min.js">
+    </script>
+
+    <%!-- <script src="//cdn.jsdelivr.net/npm/hls.js@latest">    </script> --%>
   </head>
-  <body class="flex flex-col w-screen h-screen antialiased">
+  <body class="container flex flex-col h-screen mx-auto antialiased">
     <%= @inner_content %>
   </body>
 </html>

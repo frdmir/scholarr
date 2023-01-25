@@ -232,6 +232,8 @@ defmodule Scholarr.Courses do
   """
   def get_course!(id), do: Repo.get!(Course, id)
 
+  def get_course_url(url), do: Repo.get_by!(Course, %{url: url})
+
   @doc """
   Creates a course.
 
@@ -297,7 +299,7 @@ defmodule Scholarr.Courses do
     Course.changeset(course, attrs)
   end
 
-  alias Scholarr.Courses.CourseCategory
+  alias Scholarr.Courses.{CourseCategory, CourseSubcategory}
 
   def create_course_in_category(course, category) do
     category =
@@ -318,6 +320,19 @@ defmodule Scholarr.Courses do
       |> Repo.preload(:course)
 
     CourseCategory.update_course_in_category(course, category)
+    |> Repo.update!()
+  end
+
+  def update_course_subcategory(course, subcategory) do
+    course =
+      get_course!(course)
+      |> Repo.preload(:subcategory)
+
+    subcategory =
+      get_subcategory!(subcategory)
+      |> Repo.preload(:course)
+
+    CourseSubcategory.update_course_in_subcategory(course, subcategory)
     |> Repo.update!()
   end
 end

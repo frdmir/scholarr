@@ -19,8 +19,11 @@ defmodule ScholarrWeb.Router do
 
     get "/", AppController, :index
     get "/course", CourseController, :index
-    get "/course/:category", CategoryController, :index
-    get "/course/:category/:subcategory", SubcategoryController, :index
+    # get "/course/:course", CourseController, :show
+    live "/course/:course", Course.CourseLive
+    get "/course/category/:category", CategoryController, :index
+    get "/course/category/:category/subcategory/:subcategory", SubcategoryController, :index
+    get "/watch/:id", WatchController, :show
   end
 
   # Other scopes may use custom stacks.

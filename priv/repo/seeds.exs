@@ -45,11 +45,15 @@ design =
 
 Enum.each(subs, &Courses.create_subcategory(Map.merge(&1, %{category_id: design.id})))
 
-Filesystem.Folder.root_changeset(%Folder{}, %{
-  "folder_name" => "root",
-  "folder_path" => "/media/cursos",
-  "folder_id" => "root"
-})
+Filesystem.Folder.changeset(
+  %Folder{},
+  %{
+    "folder_name" => "root",
+    "folder_path" => "/media/cursos",
+    "folder_id" => "root"
+  },
+  true
+)
 |> Repo.insert()
 
 Scholarr.Helpers.file_scanner()
