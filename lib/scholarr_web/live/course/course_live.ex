@@ -12,11 +12,16 @@ defmodule ScholarrWeb.Course.CourseLive do
       Courses.get_course_url(course)
       |> Repo.preload(:folder)
 
+    lesson =
+      Filesystem.get_childrens!(course.folder.id) |> Enum.map(& &1.file) |> List.flatten() |> hd()
+
     assigns =
       socket
       |> assign(course: course)
       |> assign(modules: Filesystem.get_childrens!(course.folder.id))
+      |> assign(:changeset, Filesystem.change_file(%Filesystem.File{}))
       |> assign(edit: false)
+      |> assign(lesson: lesson.id)
 
     {:ok, assigns}
   end
@@ -26,10 +31,10 @@ defmodule ScholarrWeb.Course.CourseLive do
 
     case params["lesson"] do
       nil ->
-        assigns =
-          socket
-          |> assign(:lesson, "")
-          |> assign(:changeset, nil)
+        assigns = socket
+
+        # |> assign(:lesson, "")
+        # |> assign(:changeset, nil)
 
         {:noreply, assigns}
 
@@ -37,7 +42,7 @@ defmodule ScholarrWeb.Course.CourseLive do
         assigns =
           socket
           |> assign(:lesson, lesson)
-          |> assign(:changeset, Filesystem.change_file(%Filesystem.File{}))
+          # |> assign(:changeset, Filesystem.change_file(%Filesystem.File{}))
           |> assign(
             :file,
             Enum.map(socket.assigns.modules, fn k -> k.file end)

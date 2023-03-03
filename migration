@@ -1,0 +1,40 @@
+The database for Scholarr.Repo has been dropped
+The database for Scholarr.Repo has been created
+
+17:58:08.204 [info] == Running 20221206200909 Scholarr.Repo.Migrations.CreateTableCategory.change/0 forward
+17:58:08.205 [info] create table category
+17:58:08.208 [info] create index category_id_display_name_index
+17:58:08.210 [info] == Migrated 20221206200909 in 0.0s
+
+17:58:08.223 [info] == Running 20221206211542 Scholarr.Repo.Migrations.CreateTableSubcategory.change/0 forward
+17:58:08.223 [info] create table subcategory
+17:58:08.226 [info] create index subcategory_id_display_name_index
+17:58:08.227 [info] == Migrated 20221206211542 in 0.0s
+
+17:58:08.228 [info] == Running 20221212123308 Scholarr.Repo.Migrations.CreateTableFolder.change/0 forward
+17:58:08.228 [info] create table folder
+17:58:08.230 [info] create index folder_id_folder_path_hash_index
+17:58:08.231 [info] == Migrated 20221212123308 in 0.0s
+
+17:58:08.232 [info] == Running 20221212130254 Scholarr.Repo.Migrations.CreateTableCourse.change/0 forward
+17:58:08.232 [info] create table course
+17:58:08.234 [info] == Migrated 20221212130254 in 0.0s
+
+17:58:08.235 [info] == Running 20221212225658 Scholarr.Repo.Migrations.CreateTableFile.change/0 forward
+17:58:08.235 [info] create table file
+17:58:08.237 [info] create index file_id_content_hash_index
+17:58:08.238 [info] == Migrated 20221212225658 in 0.0s
+
+17:58:08.239 [info] == Running 20221213151012 Scholarr.Repo.Migrations.AddTableCourseSubcategory.change/0 forward
+17:58:08.239 [info] create table course_subcategory
+17:58:08.241 [info] create index course_id_subcategory_id_unique_index
+17:58:08.242 [info] == Migrated 20221213151012 in 0.0s
+
+17:58:08.243 [info] == Running 20221213151504 Scholarr.Repo.Migrations.AddTableCourseCategory.change/0 forward
+17:58:08.243 [info] create table course_category
+17:58:08.245 [info] create index course_id_category_id_unique_index
+17:58:08.246 [info] == Migrated 20221213151504 in 0.0s
+
+17:58:08.247 [info] == Running 20221213183853 Scholarr.Repo.Migrations.AlterTableFoldersCourse.change/0 forward
+17:58:08.247 [info] alter table folder
+17:58:08.248 [info] == Migrated 20221213183853 in 0.0s

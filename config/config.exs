@@ -19,7 +19,8 @@ config :scholarr, ScholarrWeb.Endpoint,
     layout: false
   ],
   pubsub_server: Scholarr.PubSub,
-  live_view: [signing_salt: "6znbop5F"]
+  live_view: [signing_salt: "6znbop5F"],
+  check_origin: ["//localhost", "//127.0.0.1"]
 
 # Configures the mailer
 #

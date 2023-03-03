@@ -56,4 +56,4 @@ Filesystem.Folder.changeset(
 )
 |> Repo.insert()
 
-Scholarr.Helpers.file_scanner()
+# Scholarr.Helpers.file_scanner()

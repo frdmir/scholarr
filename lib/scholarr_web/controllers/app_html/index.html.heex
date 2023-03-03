@@ -1,7 +1,20 @@
-<div class="flex flex-row flex-1">
-  <main class="flex-grow px-4 py-10 bg-red-200 sm:px-6 lg:px-8">
-    <div class="mx-auto">
-      <h1>INDEX HTML PAGE</h1>
+<section class="p-8">
+  <div class="flex items-center w-full h-32">
+    <h2 class="text-2xl font-semibold text-green-600">
+      Dashboard
+    </h2>
+  </div>
+  <div>
+    <button phx-click="teste">
+      teste
+    </button>
+  </div>
+
+  <div class="flex flex-col gap-4 mb-4">
+    <div class="flex flex-row flex-wrap gap-4">
+      <%= for course <- @courses do %>
+        <.card course={course}></.card>
+      <% end %>
     </div>
-  </main>
-</div>
+  </div>
+</section>

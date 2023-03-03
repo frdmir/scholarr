@@ -8,6 +8,8 @@ defmodule Scholarr.Helpers do
   # @folder_path "/media/cursos"
 
   def file_scanner(path \\ Elixir.Application.get_env(:video_stream, :folder), folder \\ %{}) do
+    IO.inspect(path)
+
     cond do
       File.regular?(path) ->
         check_file(path, folder)
@@ -26,6 +28,7 @@ defmodule Scholarr.Helpers do
   defp check_folder(path, folder) do
     hash = :crypto.hash(:sha256, path) |> Base.encode64()
     IO.inspect(folder, label: "CHECK FOLDER")
+    IO.inspect(Path.basename(path), label: "FOLDER PATH")
 
     case Filesystem.get_folder_hash(hash) do
       nil ->
